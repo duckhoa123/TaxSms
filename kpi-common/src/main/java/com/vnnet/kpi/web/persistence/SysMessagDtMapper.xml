@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.vnnet.kpi.web.persistence.SysMessagDtMapper">
+  <resultMap id="BaseResultMap" type="com.vnnet.kpi.web.model.SysMessagDt">
+    <id column="mess_dt_id" jdbcType="BIGINT" property="messDtId" />
+    <result column="mess_hd_id" jdbcType="BIGINT" property="messHdId" />
+    <result column="tax_code" jdbcType="VARCHAR" property="taxCode" />
+    <result column="cor_name" jdbcType="NVARCHAR" property="corName" />
+    <result column="called_number" jdbcType="VARCHAR" property="calledNumber" />
+    <result column="sms_content" jdbcType="NVARCHAR" property="smsContent" />
+    <result column="status" jdbcType="TINYINT" property="status" />
+    <result column="send_result" jdbcType="NVARCHAR" property="sendResult" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    mess_dt_id, mess_hd_id, tax_code, cor_name, called_number, sms_content, status, send_result
+  </sql>
+  <select id="selectByExample" parameterType="com.vnnet.kpi.web.model.SysMessagDtExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from sys_message_dt
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from sys_message_dt
+    where mess_dt_id = #{messDtId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from sys_message_dt
+    where mess_dt_id = #{messDtId,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.vnnet.kpi.web.model.SysMessagDtExample">
+    delete from sys_message_dt
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.vnnet.kpi.web.model.SysMessagDt">
+    insert into sys_message_dt (mess_dt_id, mess_hd_id, tax_code, 
+      cor_name, called_number, sms_content, 
+      status, send_result)
+    values (#{messDtId,jdbcType=BIGINT}, #{messHdId,jdbcType=BIGINT}, #{taxCode,jdbcType=VARCHAR}, 
+      #{corName,jdbcType=NVARCHAR}, #{calledNumber,jdbcType=VARCHAR}, #{smsContent,jdbcType=NVARCHAR}, 
+      #{status,jdbcType=TINYINT}, #{sendResult,jdbcType=NVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.vnnet.kpi.web.model.SysMessagDt">
+    insert into sys_message_dt
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="messDtId != null">
+        mess_dt_id,
+      </if>
+      <if test="messHdId != null">
+        mess_hd_id,
+      </if>
+      <if test="taxCode != null">
+        tax_code,
+      </if>
+      <if test="corName != null">
+        cor_name,
+      </if>
+      <if test="calledNumber != null">
+        called_number,
+      </if>
+      <if test="smsContent != null">
+        sms_content,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="sendResult != null">
+        send_result,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="messDtId != null">
+        #{messDtId,jdbcType=BIGINT},
+      </if>
+      <if test="messHdId != null">
+        #{messHdId,jdbcType=BIGINT},
+      </if>
+      <if test="taxCode != null">
+        #{taxCode,jdbcType=VARCHAR},
+      </if>
+      <if test="corName != null">
+        #{corName,jdbcType=NVARCHAR},
+      </if>
+      <if test="calledNumber != null">
+        #{calledNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="smsContent != null">
+        #{smsContent,jdbcType=NVARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="sendResult != null">
+        #{sendResult,jdbcType=NVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.vnnet.kpi.web.model.SysMessagDtExample" resultType="java.lang.Long">
+    select count(*) from sys_message_dt
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update sys_message_dt
+    <set>
+      <if test="record.messDtId != null">
+        mess_dt_id = #{record.messDtId,jdbcType=BIGINT},
+      </if>
+      <if test="record.messHdId != null">
+        mess_hd_id = #{record.messHdId,jdbcType=BIGINT},
+      </if>
+      <if test="record.taxCode != null">
+        tax_code = #{record.taxCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.corName != null">
+        cor_name = #{record.corName,jdbcType=NVARCHAR},
+      </if>
+      <if test="record.calledNumber != null">
+        called_number = #{record.calledNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.smsContent != null">
+        sms_content = #{record.smsContent,jdbcType=NVARCHAR},
+      </if>
+      <if test="record.status != null">
+        status = #{record.status,jdbcType=TINYINT},
+      </if>
+      <if test="record.sendResult != null">
+        send_result = #{record.sendResult,jdbcType=NVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update sys_message_dt
+    set mess_dt_id = #{record.messDtId,jdbcType=BIGINT},
+      mess_hd_id = #{record.messHdId,jdbcType=BIGINT},
+      tax_code = #{record.taxCode,jdbcType=VARCHAR},
+      cor_name = #{record.corName,jdbcType=NVARCHAR},
+      called_number = #{record.calledNumber,jdbcType=VARCHAR},
+      sms_content = #{record.smsContent,jdbcType=NVARCHAR},
+      status = #{record.status,jdbcType=TINYINT},
+      send_result = #{record.sendResult,jdbcType=NVARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.vnnet.kpi.web.model.SysMessagDt">
+    update sys_message_dt
+    <set>
+      <if test="messHdId != null">
+        mess_hd_id = #{messHdId,jdbcType=BIGINT},
+      </if>
+      <if test="taxCode != null">
+        tax_code = #{taxCode,jdbcType=VARCHAR},
+      </if>
+      <if test="corName != null">
+        cor_name = #{corName,jdbcType=NVARCHAR},
+      </if>
+      <if test="calledNumber != null">
+        called_number = #{calledNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="smsContent != null">
+        sms_content = #{smsContent,jdbcType=NVARCHAR},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=TINYINT},
+      </if>
+      <if test="sendResult != null">
+        send_result = #{sendResult,jdbcType=NVARCHAR},
+      </if>
+    </set>
+    where mess_dt_id = #{messDtId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.vnnet.kpi.web.model.SysMessagDt">
+    update sys_message_dt
+    set mess_hd_id = #{messHdId,jdbcType=BIGINT},
+      tax_code = #{taxCode,jdbcType=VARCHAR},
+      cor_name = #{corName,jdbcType=NVARCHAR},
+      called_number = #{calledNumber,jdbcType=VARCHAR},
+      sms_content = #{smsContent,jdbcType=NVARCHAR},
+      status = #{status,jdbcType=TINYINT},
+      send_result = #{sendResult,jdbcType=NVARCHAR}
+    where mess_dt_id = #{messDtId,jdbcType=BIGINT}
+  </update>
+</mapper>

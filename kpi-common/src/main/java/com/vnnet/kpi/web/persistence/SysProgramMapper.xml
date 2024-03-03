@@ -1,0 +1,292 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.vnnet.kpi.web.persistence.SysProgramMapper">
+  <resultMap id="BaseResultMap" type="com.vnnet.kpi.web.model.SysProgram">
+    <id column="program_id" jdbcType="BIGINT" property="programId" />
+    <result column="program_name" jdbcType="NVARCHAR" property="programName" />
+    <result column="sms_template" jdbcType="NVARCHAR" property="smsTemplate" />
+    <result column="group_code" jdbcType="VARCHAR" property="groupCode" />
+    <result column="del_flag" jdbcType="INTEGER" property="delFlag" />
+    <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="last_update_by" jdbcType="VARCHAR" property="lastUpdateBy" />
+    <result column="last_update_time" jdbcType="TIMESTAMP" property="lastUpdateTime" />
+    <result column="file_template" jdbcType="VARCHAR" property="fileTemplate" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    program_id, program_name, sms_template, group_code, del_flag, create_by, create_time, 
+    last_update_by, last_update_time, file_template
+  </sql>
+  <select id="selectByExample" parameterType="com.vnnet.kpi.web.model.SysProgramExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from sys_program
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from sys_program
+    where program_id = #{programId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from sys_program
+    where program_id = #{programId,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.vnnet.kpi.web.model.SysProgramExample">
+    delete from sys_program
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.vnnet.kpi.web.model.SysProgram">
+    insert into sys_program (program_id, program_name, sms_template, 
+      group_code, del_flag, create_by, 
+      create_time, last_update_by, last_update_time, 
+      file_template)
+    values (#{programId,jdbcType=BIGINT}, #{programName,jdbcType=NVARCHAR}, #{smsTemplate,jdbcType=NVARCHAR}, 
+      #{groupCode,jdbcType=VARCHAR}, #{delFlag,jdbcType=INTEGER}, #{createBy,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{lastUpdateBy,jdbcType=VARCHAR}, #{lastUpdateTime,jdbcType=TIMESTAMP}, 
+      #{fileTemplate,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.vnnet.kpi.web.model.SysProgram">
+    insert into sys_program
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="programId != null">
+        program_id,
+      </if>
+      <if test="programName != null">
+        program_name,
+      </if>
+      <if test="smsTemplate != null">
+        sms_template,
+      </if>
+      <if test="groupCode != null">
+        group_code,
+      </if>
+      <if test="delFlag != null">
+        del_flag,
+      </if>
+      <if test="createBy != null">
+        create_by,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="lastUpdateBy != null">
+        last_update_by,
+      </if>
+      <if test="lastUpdateTime != null">
+        last_update_time,
+      </if>
+      <if test="fileTemplate != null">
+        file_template,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="programId != null">
+        #{programId,jdbcType=BIGINT},
+      </if>
+      <if test="programName != null">
+        #{programName,jdbcType=NVARCHAR},
+      </if>
+      <if test="smsTemplate != null">
+        #{smsTemplate,jdbcType=NVARCHAR},
+      </if>
+      <if test="groupCode != null">
+        #{groupCode,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null">
+        #{delFlag,jdbcType=INTEGER},
+      </if>
+      <if test="createBy != null">
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdateBy != null">
+        #{lastUpdateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdateTime != null">
+        #{lastUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="fileTemplate != null">
+        #{fileTemplate,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.vnnet.kpi.web.model.SysProgramExample" resultType="java.lang.Long">
+    select count(*) from sys_program
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update sys_program
+    <set>
+      <if test="record.programId != null">
+        program_id = #{record.programId,jdbcType=BIGINT},
+      </if>
+      <if test="record.programName != null">
+        program_name = #{record.programName,jdbcType=NVARCHAR},
+      </if>
+      <if test="record.smsTemplate != null">
+        sms_template = #{record.smsTemplate,jdbcType=NVARCHAR},
+      </if>
+      <if test="record.groupCode != null">
+        group_code = #{record.groupCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.delFlag != null">
+        del_flag = #{record.delFlag,jdbcType=INTEGER},
+      </if>
+      <if test="record.createBy != null">
+        create_by = #{record.createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null">
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.lastUpdateBy != null">
+        last_update_by = #{record.lastUpdateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="record.lastUpdateTime != null">
+        last_update_time = #{record.lastUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.fileTemplate != null">
+        file_template = #{record.fileTemplate,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update sys_program
+    set program_id = #{record.programId,jdbcType=BIGINT},
+      program_name = #{record.programName,jdbcType=NVARCHAR},
+      sms_template = #{record.smsTemplate,jdbcType=NVARCHAR},
+      group_code = #{record.groupCode,jdbcType=VARCHAR},
+      del_flag = #{record.delFlag,jdbcType=INTEGER},
+      create_by = #{record.createBy,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      last_update_by = #{record.lastUpdateBy,jdbcType=VARCHAR},
+      last_update_time = #{record.lastUpdateTime,jdbcType=TIMESTAMP},
+      file_template = #{record.fileTemplate,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.vnnet.kpi.web.model.SysProgram">
+    update sys_program
+    <set>
+      <if test="programName != null">
+        program_name = #{programName,jdbcType=NVARCHAR},
+      </if>
+      <if test="smsTemplate != null">
+        sms_template = #{smsTemplate,jdbcType=NVARCHAR},
+      </if>
+      <if test="groupCode != null">
+        group_code = #{groupCode,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null">
+        del_flag = #{delFlag,jdbcType=INTEGER},
+      </if>
+      <if test="createBy != null">
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdateBy != null">
+        last_update_by = #{lastUpdateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdateTime != null">
+        last_update_time = #{lastUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="fileTemplate != null">
+        file_template = #{fileTemplate,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where program_id = #{programId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.vnnet.kpi.web.model.SysProgram">
+    update sys_program
+    set program_name = #{programName,jdbcType=NVARCHAR},
+      sms_template = #{smsTemplate,jdbcType=NVARCHAR},
+      group_code = #{groupCode,jdbcType=VARCHAR},
+      del_flag = #{delFlag,jdbcType=INTEGER},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      last_update_by = #{lastUpdateBy,jdbcType=VARCHAR},
+      last_update_time = #{lastUpdateTime,jdbcType=TIMESTAMP},
+      file_template = #{fileTemplate,jdbcType=VARCHAR}
+    where program_id = #{programId,jdbcType=BIGINT}
+  </update>
+</mapper>

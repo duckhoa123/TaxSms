@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/Mbf5_CucThue.iml" filepath="$PROJECT_DIR$/.idea/Mbf5_CucThue.iml" />
+      <module fileurl="file://$PROJECT_DIR$/kpi-batch/kpi-batch.iml" filepath="$PROJECT_DIR$/kpi-batch/kpi-batch.iml" />
+      <module fileurl="file://$PROJECT_DIR$/kpi-common/kpi-common.iml" filepath="$PROJECT_DIR$/kpi-common/kpi-common.iml" />
+      <module fileurl="file://$PROJECT_DIR$/kpi-console/kpi-console.iml" filepath="$PROJECT_DIR$/kpi-console/kpi-console.iml" />
+      <module fileurl="file://$PROJECT_DIR$/kpi-readpdf-ui/kpi-readpdf-ui.iml" filepath="$PROJECT_DIR$/kpi-readpdf-ui/kpi-readpdf-ui.iml" />
+    </modules>
+  </component>
+</project>

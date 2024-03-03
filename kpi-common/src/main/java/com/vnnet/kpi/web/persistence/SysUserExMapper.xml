@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.vnnet.kpi.web.persistence.SysUserExMapper">
+    <resultMap id="BaseResultMap" type="com.vnnet.kpi.web.model.SysUser">
+        <id column="ID" jdbcType="NUMERIC" property="id"/>
+        <result column="NAME" jdbcType="VARCHAR" property="name"/>
+        <result column="PASSWORD" jdbcType="VARCHAR" property="password"/>
+        <result column="FULL_NAME" jdbcType="VARCHAR" property="fullName"/>
+        <result column="SALT" jdbcType="VARCHAR" property="salt"/>
+        <result column="EMAIL" jdbcType="VARCHAR" property="email"/>
+        <result column="ICON_FILE" jdbcType="VARCHAR" property="iconFile"/>
+        <result column="CMND" jdbcType="VARCHAR" property="cmnd"/>
+        <result column="MOBILE" jdbcType="VARCHAR" property="mobile"/>
+        <result column="STATUS" jdbcType="NUMERIC" property="status"/>
+        <result column="PROVINCE_CODE" jdbcType="VARCHAR" property="provinceCode"/>
+        <result column="DISTRICT_CODE" jdbcType="VARCHAR" property="districtCode"/>
+        <result column="SHOP_CODE" jdbcType="VARCHAR" property="shopCode"/>
+        <result column="EMP_CODE" jdbcType="VARCHAR" property="empCode"/>
+        <result column="USER_TYPE_ID" jdbcType="NUMERIC" property="userTypeId"/>
+        <result column="CREATE_BY" jdbcType="VARCHAR" property="createBy"/>
+        <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="LAST_UPDATE_BY" jdbcType="VARCHAR" property="lastUpdateBy"/>
+        <result column="LAST_UPDATE_TIME" jdbcType="TIMESTAMP" property="lastUpdateTime"/>
+        <result column="DEL_FLAG" jdbcType="NUMERIC" property="delFlag"/>
+        <result column="MEMBER_CODE" jdbcType="VARCHAR" property="memberCode"/>
+        <result column="PW" jdbcType="VARCHAR" property="pw"/>
+        <result column="DEVICE_ID" jdbcType="VARCHAR" property="deviceId"/>
+        <result column="START_DATE" jdbcType="TIMESTAMP" property="startDate"/>
+        <result column="END_DATE" jdbcType="TIMESTAMP" property="endDate"/>
+        <result column="START_MONTH" jdbcType="TIMESTAMP" property="startMonth"/>
+        <result column="DISTRICT_ID" jdbcType="NUMERIC" property="districtId"/>
+        <result column="WARD_ID" jdbcType="NUMERIC" property="wardId"/>
+        <result column="DISTRICT_NAME" jdbcType="NUMERIC" property="districtName"/>
+        <result column="WARD_NAME" jdbcType="NUMERIC" property="wardName"/>
+        <result column="HOSPITAL_ID" jdbcType="NUMERIC" property="hospitalId"/>
+        <result column="HOSPITAL_NAME" jdbcType="NUMERIC" property="hospitalName"/>
+    </resultMap>
+    <resultMap id="BaseResultMap1" type="com.vnnet.kpi.web.model.SysUser">
+        <id column="ID" jdbcType="NUMERIC" property="id"/>
+        <result column="NAME" jdbcType="VARCHAR" property="name"/>
+
+        <result column="TONG" jdbcType="NUMERIC" property="status"/>
+    </resultMap>
+
+    <select id="selectByExample" resultMap="BaseResultMap">
+        select distinct a.*
+        from sys_user a
+        where (LOWER(a.name) like ('%' + LOWER(#{filter_text}) + '%')
+        or LOWER(a.full_name) like ('%' + LOWER(#{filter_text}) + '%')
+        or #{filter_text} is null
+        )
+        and (a.user_type_id = #{filter_type} or #{filter_type} = '' or #{filter_type} is null)
+        order by a.name
+    </select>
+
+    <select id="selectByGroup" resultMap="BaseResultMap1">
+        select a.id, a.name, count(b.id) as tong from sys_user_type a left join sys_user b on a.id = b.user_type_id
+        where (a.name like ('%' + #{filter_text} + '%')) and a.del_flag = 0
+        group by a.id, a.name
+    </select>
+
+    <select id="selectByLogin" resultMap="BaseResultMap">
+        select * from sys_user where LOWER(name) = LOWER(#{username})
+    </select>
+
+
+</mapper>

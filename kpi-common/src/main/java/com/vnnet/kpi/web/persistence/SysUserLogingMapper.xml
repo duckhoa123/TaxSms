@@ -1,0 +1,448 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.vnnet.kpi.web.persistence.SysUserLogingMapper">
+    <resultMap id="BaseResultMap" type="com.vnnet.kpi.web.model.SysUserLoging">
+        <id column="MAIN_ID" jdbcType="NUMERIC" property="mainId"/>
+        <result column="ID" jdbcType="NUMERIC" property="id"/>
+        <result column="NAME" jdbcType="VARCHAR" property="name"/>
+        <result column="FULL_NAME" jdbcType="VARCHAR" property="fullName"/>
+        <result column="EMAIL" jdbcType="VARCHAR" property="email"/>
+        <result column="MOBILE" jdbcType="VARCHAR" property="mobile"/>
+        <result column="STATUS" jdbcType="NUMERIC" property="status"/>
+        <result column="PROVINCE_CODE" jdbcType="VARCHAR" property="provinceCode"/>
+        <result column="DISTRICT_CODE" jdbcType="VARCHAR" property="districtCode"/>
+        <result column="SHOP_CODE" jdbcType="VARCHAR" property="shopCode"/>
+        <result column="EMP_CODE" jdbcType="VARCHAR" property="empCode"/>
+        <result column="MEMBER_CODE" jdbcType="VARCHAR" property="memberCode"/>
+        <result column="USER_TYPE_ID" jdbcType="NUMERIC" property="userTypeId"/>
+        <result column="DEL_FLAG" jdbcType="NUMERIC" property="delFlag"/>
+        <result column="START_DATE" jdbcType="TIMESTAMP" property="startDate"/>
+        <result column="END_DATE" jdbcType="TIMESTAMP" property="endDate"/>
+        <result column="LAST_UPDATE_BY" jdbcType="VARCHAR" property="lastUpdateBy"/>
+        <result column="LAST_UPDATE_TIME" jdbcType="TIMESTAMP" property="lastUpdateTime"/>
+        <result column="CREATE_BY" jdbcType="VARCHAR" property="createBy"/>
+        <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime"/>
+    </resultMap>
+    <sql id="Example_Where_Clause">
+        <where>
+            <foreach collection="oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" prefixOverrides="and" suffix=")">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach close=")" collection="criterion.value" item="listItem" open="("
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Update_By_Example_Where_Clause">
+        <where>
+            <foreach collection="example.oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" prefixOverrides="and" suffix=")">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach close=")" collection="criterion.value" item="listItem" open="("
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Base_Column_List">
+        MAIN_ID, ID, NAME, FULL_NAME, EMAIL, MOBILE, STATUS, PROVINCE_CODE, DISTRICT_CODE,
+        SHOP_CODE, EMP_CODE, MEMBER_CODE, USER_TYPE_ID, DEL_FLAG, START_DATE, END_DATE, LAST_UPDATE_BY,
+        LAST_UPDATE_TIME, CREATE_BY, CREATE_TIME
+    </sql>
+    <select id="selectByExample" parameterType="com.vnnet.kpi.web.model.SysUserLogingExample" resultMap="BaseResultMap">
+        select
+        <if test="distinct">
+            distinct
+        </if>
+        'true' as QUERYID,
+        <include refid="Base_Column_List"/>
+        from SYS_USER_LOGING
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+        <if test="orderByClause != null">
+            order by ${orderByClause}
+        </if>
+    </select>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Short" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from SYS_USER_LOGING
+        where MAIN_ID = #{mainId,jdbcType=NUMERIC}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Short">
+        delete from SYS_USER_LOGING
+        where MAIN_ID = #{mainId,jdbcType=NUMERIC}
+    </delete>
+    <delete id="deleteByExample" parameterType="com.vnnet.kpi.web.model.SysUserLogingExample">
+        delete from SYS_USER_LOGING
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </delete>
+    <insert id="insert" keyColumn="MAIN_ID" keyProperty="mainId" parameterType="com.vnnet.kpi.web.model.SysUserLoging"
+            useGeneratedKeys="true">
+        insert into SYS_USER_LOGING (ID, NAME, FULL_NAME,
+        EMAIL, MOBILE, STATUS,
+        PROVINCE_CODE, DISTRICT_CODE, SHOP_CODE,
+        EMP_CODE, MEMBER_CODE, USER_TYPE_ID,
+        DEL_FLAG, START_DATE, END_DATE,
+        LAST_UPDATE_BY, LAST_UPDATE_TIME, CREATE_BY,
+        CREATE_TIME)
+        values (#{id,jdbcType=NUMERIC}, #{name,jdbcType=VARCHAR}, #{fullName,jdbcType=VARCHAR},
+        #{email,jdbcType=VARCHAR}, #{mobile,jdbcType=VARCHAR}, #{status,jdbcType=NUMERIC},
+        #{provinceCode,jdbcType=VARCHAR}, #{districtCode,jdbcType=VARCHAR}, #{shopCode,jdbcType=VARCHAR},
+        #{empCode,jdbcType=VARCHAR}, #{memberCode,jdbcType=VARCHAR}, #{userTypeId,jdbcType=NUMERIC},
+        #{delFlag,jdbcType=NUMERIC}, #{startDate,jdbcType=TIMESTAMP}, #{endDate,jdbcType=TIMESTAMP},
+        #{lastUpdateBy,jdbcType=VARCHAR}, #{lastUpdateTime,jdbcType=TIMESTAMP}, #{createBy,jdbcType=VARCHAR},
+        #{createTime,jdbcType=TIMESTAMP})
+    </insert>
+    <insert id="insertSelective" keyColumn="MAIN_ID" keyProperty="mainId"
+            parameterType="com.vnnet.kpi.web.model.SysUserLoging" useGeneratedKeys="true">
+        insert into SYS_USER_LOGING
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                ID,
+            </if>
+            <if test="name != null">
+                NAME,
+            </if>
+            <if test="fullName != null">
+                FULL_NAME,
+            </if>
+            <if test="email != null">
+                EMAIL,
+            </if>
+            <if test="mobile != null">
+                MOBILE,
+            </if>
+            <if test="status != null">
+                STATUS,
+            </if>
+            <if test="provinceCode != null">
+                PROVINCE_CODE,
+            </if>
+            <if test="districtCode != null">
+                DISTRICT_CODE,
+            </if>
+            <if test="shopCode != null">
+                SHOP_CODE,
+            </if>
+            <if test="empCode != null">
+                EMP_CODE,
+            </if>
+            <if test="memberCode != null">
+                MEMBER_CODE,
+            </if>
+            <if test="userTypeId != null">
+                USER_TYPE_ID,
+            </if>
+            <if test="delFlag != null">
+                DEL_FLAG,
+            </if>
+            <if test="startDate != null">
+                START_DATE,
+            </if>
+            <if test="endDate != null">
+                END_DATE,
+            </if>
+            <if test="lastUpdateBy != null">
+                LAST_UPDATE_BY,
+            </if>
+            <if test="lastUpdateTime != null">
+                LAST_UPDATE_TIME,
+            </if>
+            <if test="createBy != null">
+                CREATE_BY,
+            </if>
+            <if test="createTime != null">
+                CREATE_TIME,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=NUMERIC},
+            </if>
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="fullName != null">
+                #{fullName,jdbcType=VARCHAR},
+            </if>
+            <if test="email != null">
+                #{email,jdbcType=VARCHAR},
+            </if>
+            <if test="mobile != null">
+                #{mobile,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=NUMERIC},
+            </if>
+            <if test="provinceCode != null">
+                #{provinceCode,jdbcType=VARCHAR},
+            </if>
+            <if test="districtCode != null">
+                #{districtCode,jdbcType=VARCHAR},
+            </if>
+            <if test="shopCode != null">
+                #{shopCode,jdbcType=VARCHAR},
+            </if>
+            <if test="empCode != null">
+                #{empCode,jdbcType=VARCHAR},
+            </if>
+            <if test="memberCode != null">
+                #{memberCode,jdbcType=VARCHAR},
+            </if>
+            <if test="userTypeId != null">
+                #{userTypeId,jdbcType=NUMERIC},
+            </if>
+            <if test="delFlag != null">
+                #{delFlag,jdbcType=NUMERIC},
+            </if>
+            <if test="startDate != null">
+                #{startDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="endDate != null">
+                #{endDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="lastUpdateBy != null">
+                #{lastUpdateBy,jdbcType=VARCHAR},
+            </if>
+            <if test="lastUpdateTime != null">
+                #{lastUpdateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createBy != null">
+                #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <select id="countByExample" parameterType="com.vnnet.kpi.web.model.SysUserLogingExample"
+            resultType="java.lang.Long">
+        select count(*) from SYS_USER_LOGING
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </select>
+    <update id="updateByExampleSelective" parameterType="map">
+        update SYS_USER_LOGING
+        <set>
+            <if test="record.mainId != null">
+                MAIN_ID = #{record.mainId,jdbcType=NUMERIC},
+            </if>
+            <if test="record.id != null">
+                ID = #{record.id,jdbcType=NUMERIC},
+            </if>
+            <if test="record.name != null">
+                NAME = #{record.name,jdbcType=VARCHAR},
+            </if>
+            <if test="record.fullName != null">
+                FULL_NAME = #{record.fullName,jdbcType=VARCHAR},
+            </if>
+            <if test="record.email != null">
+                EMAIL = #{record.email,jdbcType=VARCHAR},
+            </if>
+            <if test="record.mobile != null">
+                MOBILE = #{record.mobile,jdbcType=VARCHAR},
+            </if>
+            <if test="record.status != null">
+                STATUS = #{record.status,jdbcType=NUMERIC},
+            </if>
+            <if test="record.provinceCode != null">
+                PROVINCE_CODE = #{record.provinceCode,jdbcType=VARCHAR},
+            </if>
+            <if test="record.districtCode != null">
+                DISTRICT_CODE = #{record.districtCode,jdbcType=VARCHAR},
+            </if>
+            <if test="record.shopCode != null">
+                SHOP_CODE = #{record.shopCode,jdbcType=VARCHAR},
+            </if>
+            <if test="record.empCode != null">
+                EMP_CODE = #{record.empCode,jdbcType=VARCHAR},
+            </if>
+            <if test="record.memberCode != null">
+                MEMBER_CODE = #{record.memberCode,jdbcType=VARCHAR},
+            </if>
+            <if test="record.userTypeId != null">
+                USER_TYPE_ID = #{record.userTypeId,jdbcType=NUMERIC},
+            </if>
+            <if test="record.delFlag != null">
+                DEL_FLAG = #{record.delFlag,jdbcType=NUMERIC},
+            </if>
+            <if test="record.startDate != null">
+                START_DATE = #{record.startDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="record.endDate != null">
+                END_DATE = #{record.endDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="record.lastUpdateBy != null">
+                LAST_UPDATE_BY = #{record.lastUpdateBy,jdbcType=VARCHAR},
+            </if>
+            <if test="record.lastUpdateTime != null">
+                LAST_UPDATE_TIME = #{record.lastUpdateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="record.createBy != null">
+                CREATE_BY = #{record.createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="record.createTime != null">
+                CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByExample" parameterType="map">
+        update SYS_USER_LOGING
+        set MAIN_ID = #{record.mainId,jdbcType=NUMERIC},
+        ID = #{record.id,jdbcType=NUMERIC},
+        NAME = #{record.name,jdbcType=VARCHAR},
+        FULL_NAME = #{record.fullName,jdbcType=VARCHAR},
+        EMAIL = #{record.email,jdbcType=VARCHAR},
+        MOBILE = #{record.mobile,jdbcType=VARCHAR},
+        STATUS = #{record.status,jdbcType=NUMERIC},
+        PROVINCE_CODE = #{record.provinceCode,jdbcType=VARCHAR},
+        DISTRICT_CODE = #{record.districtCode,jdbcType=VARCHAR},
+        SHOP_CODE = #{record.shopCode,jdbcType=VARCHAR},
+        EMP_CODE = #{record.empCode,jdbcType=VARCHAR},
+        MEMBER_CODE = #{record.memberCode,jdbcType=VARCHAR},
+        USER_TYPE_ID = #{record.userTypeId,jdbcType=NUMERIC},
+        DEL_FLAG = #{record.delFlag,jdbcType=NUMERIC},
+        START_DATE = #{record.startDate,jdbcType=TIMESTAMP},
+        END_DATE = #{record.endDate,jdbcType=TIMESTAMP},
+        LAST_UPDATE_BY = #{record.lastUpdateBy,jdbcType=VARCHAR},
+        LAST_UPDATE_TIME = #{record.lastUpdateTime,jdbcType=TIMESTAMP},
+        CREATE_BY = #{record.createBy,jdbcType=VARCHAR},
+        CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP}
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByPrimaryKeySelective" parameterType="com.vnnet.kpi.web.model.SysUserLoging">
+        update SYS_USER_LOGING
+        <set>
+            <if test="id != null">
+                ID = #{id,jdbcType=NUMERIC},
+            </if>
+            <if test="name != null">
+                NAME = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="fullName != null">
+                FULL_NAME = #{fullName,jdbcType=VARCHAR},
+            </if>
+            <if test="email != null">
+                EMAIL = #{email,jdbcType=VARCHAR},
+            </if>
+            <if test="mobile != null">
+                MOBILE = #{mobile,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                STATUS = #{status,jdbcType=NUMERIC},
+            </if>
+            <if test="provinceCode != null">
+                PROVINCE_CODE = #{provinceCode,jdbcType=VARCHAR},
+            </if>
+            <if test="districtCode != null">
+                DISTRICT_CODE = #{districtCode,jdbcType=VARCHAR},
+            </if>
+            <if test="shopCode != null">
+                SHOP_CODE = #{shopCode,jdbcType=VARCHAR},
+            </if>
+            <if test="empCode != null">
+                EMP_CODE = #{empCode,jdbcType=VARCHAR},
+            </if>
+            <if test="memberCode != null">
+                MEMBER_CODE = #{memberCode,jdbcType=VARCHAR},
+            </if>
+            <if test="userTypeId != null">
+                USER_TYPE_ID = #{userTypeId,jdbcType=NUMERIC},
+            </if>
+            <if test="delFlag != null">
+                DEL_FLAG = #{delFlag,jdbcType=NUMERIC},
+            </if>
+            <if test="startDate != null">
+                START_DATE = #{startDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="endDate != null">
+                END_DATE = #{endDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="lastUpdateBy != null">
+                LAST_UPDATE_BY = #{lastUpdateBy,jdbcType=VARCHAR},
+            </if>
+            <if test="lastUpdateTime != null">
+                LAST_UPDATE_TIME = #{lastUpdateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createBy != null">
+                CREATE_BY = #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where MAIN_ID = #{mainId,jdbcType=NUMERIC}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.vnnet.kpi.web.model.SysUserLoging">
+        update SYS_USER_LOGING
+        set ID = #{id,jdbcType=NUMERIC},
+        NAME = #{name,jdbcType=VARCHAR},
+        FULL_NAME = #{fullName,jdbcType=VARCHAR},
+        EMAIL = #{email,jdbcType=VARCHAR},
+        MOBILE = #{mobile,jdbcType=VARCHAR},
+        STATUS = #{status,jdbcType=NUMERIC},
+        PROVINCE_CODE = #{provinceCode,jdbcType=VARCHAR},
+        DISTRICT_CODE = #{districtCode,jdbcType=VARCHAR},
+        SHOP_CODE = #{shopCode,jdbcType=VARCHAR},
+        EMP_CODE = #{empCode,jdbcType=VARCHAR},
+        MEMBER_CODE = #{memberCode,jdbcType=VARCHAR},
+        USER_TYPE_ID = #{userTypeId,jdbcType=NUMERIC},
+        DEL_FLAG = #{delFlag,jdbcType=NUMERIC},
+        START_DATE = #{startDate,jdbcType=TIMESTAMP},
+        END_DATE = #{endDate,jdbcType=TIMESTAMP},
+        LAST_UPDATE_BY = #{lastUpdateBy,jdbcType=VARCHAR},
+        LAST_UPDATE_TIME = #{lastUpdateTime,jdbcType=TIMESTAMP},
+        CREATE_BY = #{createBy,jdbcType=VARCHAR},
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP}
+        where MAIN_ID = #{mainId,jdbcType=NUMERIC}
+    </update>
+</mapper>

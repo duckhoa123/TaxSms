@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<generatorConfiguration>
+    <!-- oracle lib location -->
+    <classPathEntry location="E:\Project\Mbf5_CucThue\kpi-generator\lib\mssql-jdbc-10.2.0.jre8.jar"/>
+    <context id="DB2Tables" targetRuntime="MyBatis3">
+
+        <plugin type="org.mybatis.generator.plugins.ToStringPlugin">
+            <property name="useToStringFromRoot" value="true"/>
+        </plugin>
+        <plugin type="org.mybatis.generator.plugins.SerializablePlugin"/>
+        <plugin type="org.mybatis.generator.plugins.CaseInsensitiveLikePlugin"/>
+        <!--		<plugin type="com.xxg.mybatis.plugins.MySQLLimitPlugin"></plugin>-->
+
+        <commentGenerator>
+            <property name="suppressAllComments" value="true"/>
+            <property name="suppressDate" value="true"/>
+        </commentGenerator>
+
+        <jdbcConnection driverClass="com.microsoft.sqlserver.jdbc.SQLServerDriver"
+                        connectionURL="jdbc:sqlserver://127.0.0.1:1433;databaseName=CucThue;encrypt=true;trustServerCertificate=true;"
+                        userId="sa"
+                        password="@a123456">
+            <property name="remarksReporting" value="true"></property>
+        </jdbcConnection>
+
+        <javaTypeResolver>
+            <property name="forceBigDecimals" value="false"/>
+        </javaTypeResolver>
+
+        <!-- model package and location -->
+        <javaModelGenerator targetPackage="com.vnnet.kpi.web.model" targetProject="../kpi-common/src/main/java">
+            <property name="enableSubPackages" value="true"/>
+            <property name="trimStrings" value="true"/>
+        </javaModelGenerator>
+        <!-- mapping package and location -->
+        <sqlMapGenerator targetPackage="com.vnnet.kpi.web.persistence" targetProject="../kpi-common/src/main/java">
+            <property name="enableSubPackages" value="true"/>
+        </sqlMapGenerator>
+        <!-- dao package and location -->
+        <javaClientGenerator type="XMLMAPPER" targetPackage="com.vnnet.kpi.web.persistence"
+                             targetProject="../kpi-common/src/main/java">
+            <property name="enableSubPackages" value="true"/>
+        </javaClientGenerator>
+
+        <table tableName="sys_config" domainObjectName="SysConfig" enableCountByExample="true"
+               enableUpdateByExample="true" enableDeleteByExample="true" enableSelectByExample="true"
+               selectByExampleQueryId="true">
+            <generatedKey column="id" sqlStatement="JDBC" identity="true"/>
+        </table>
+
+        <table tableName="sys_log" domainObjectName="SysLog" enableCountByExample="true" enableUpdateByExample="true"
+               enableDeleteByExample="true" enableSelectByExample="true" selectByExampleQueryId="true">
+            <generatedKey column="id" sqlStatement="JDBC" identity="true"/>
+        </table>
+
+        <table tableName="sys_menu" domainObjectName="SysMenu" enableCountByExample="true" enableUpdateByExample="true"
+               enableDeleteByExample="true" enableSelectByExample="true" selectByExampleQueryId="true">
+            <generatedKey column="id" sqlStatement="JDBC" identity="true"/>
+        </table>
+
+        <table tableName="sys_role" domainObjectName="SysRole" enableCountByExample="true" enableUpdateByExample="true"
+               enableDeleteByExample="true" enableSelectByExample="true" selectByExampleQueryId="true">
+            <generatedKey column="id" sqlStatement="JDBC" identity="true"/>
+        </table>
+
+        <table tableName="sys_role_menu" domainObjectName="SysRoleMenu" enableCountByExample="true"
+               enableUpdateByExample="true" enableDeleteByExample="true" enableSelectByExample="true"
+               selectByExampleQueryId="true">
+            <generatedKey column="id" sqlStatement="JDBC" identity="true"/>
+        </table>
+
+        <table tableName="sys_user" domainObjectName="SysUser" enableCountByExample="true" enableUpdateByExample="true"
+               enableDeleteByExample="true" enableSelectByExample="true" selectByExampleQueryId="true">
+            <generatedKey column="id" sqlStatement="JDBC" identity="true"/>
+        </table>
+
+        <table tableName="sys_user_role" domainObjectName="SysUserRole" enableCountByExample="true"
+               enableUpdateByExample="true" enableDeleteByExample="true" enableSelectByExample="true"
+               selectByExampleQueryId="true">
+            <generatedKey column="id" sqlStatement="JDBC" identity="true"/>
+        </table>
+
+        <table tableName="sys_user_type" domainObjectName="SysUserType" enableCountByExample="true"
+               enableUpdateByExample="true" enableDeleteByExample="true" enableSelectByExample="true"
+               selectByExampleQueryId="true">
+            <generatedKey column="id" sqlStatement="JDBC" identity="true"/>
+        </table>
+
+        <table tableName="sys_message_hd" domainObjectName="SysMessagHd" enableCountByExample="true"
+               enableUpdateByExample="true" enableDeleteByExample="true" enableSelectByExample="true"
+               selectByExampleQueryId="true">
+            <generatedKey column="mess_hd_id" sqlStatement="JDBC" identity="true"/>
+        </table>
+
+        <table tableName="sys_message_dt" domainObjectName="SysMessagDt" enableCountByExample="true"
+               enableUpdateByExample="true" enableDeleteByExample="true" enableSelectByExample="true"
+               selectByExampleQueryId="true">
+            <generatedKey column="id" sqlStatement="JDBC" identity="true"/>
+        </table>
+
+        <table tableName="sys_program" domainObjectName="SysProgram" enableCountByExample="true"
+               enableUpdateByExample="true" enableDeleteByExample="true" enableSelectByExample="true"
+               selectByExampleQueryId="true">
+            <generatedKey column="id" sqlStatement="JDBC" identity="true"/>
+        </table>
+
+        <table tableName="sys_log_info" domainObjectName="SysLogInfo" enableCountByExample="true"
+               enableUpdateByExample="true" enableDeleteByExample="true" enableSelectByExample="true"
+               selectByExampleQueryId="true">
+            <generatedKey column="id" sqlStatement="JDBC" identity="true"/>
+        </table>
+
+        <table tableName="sys_sms_template" domainObjectName="SysSmsTemplate" enableCountByExample="true"
+               enableUpdateByExample="true" enableDeleteByExample="true" enableSelectByExample="true"
+               selectByExampleQueryId="true">
+            <generatedKey column="template_id" sqlStatement="JDBC" identity="true"/>
+        </table>
+
+        <table tableName="sys_pdf_read_his" domainObjectName="SysPdfReadHis" enableCountByExample="true"
+               enableUpdateByExample="true" enableDeleteByExample="true" enableSelectByExample="true"
+               selectByExampleQueryId="true">
+        </table>
+
+    </context>
+</generatorConfiguration>

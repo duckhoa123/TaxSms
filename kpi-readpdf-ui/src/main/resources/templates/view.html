@@ -1,0 +1,40 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>CỔNG NHẮN TIN BRANDNAME</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/asset/style.css}">
+</head>
+<body>
+<div class="bgImage"></div>
+
+<!-- multistep form -->
+<form id="msform" method="post">
+
+    <!-- step 1 -->
+    <fieldset>
+        <h2 class="h2">GỬI OTP</h2>
+        <h3 class="h3" th:utext="${message}" ></h3>
+        <input type="button" name="next" id="sendotp" class="next action-button" value="Gửi mã OTP" />
+    </fieldset>
+
+    <!-- step 2 -->
+    <fieldset>
+        <h2 class="h2">Xác nhận OTP</h2>
+        <h3 class="h3">Vui lòng nhập mã OTP đã được gửi đến điện thoại của bạn </h3>
+        <input type="text" name="otp" id="otp" placeholder="Nhập mã OTP" />
+        <h3 class="h3" style="color: red; display: none" id="error"></h3>
+        <input type="text" name="token" id="token" style="display: none" placeholder="" />
+        <input type="button" name="go back" class="previous  " value="Quay lại" />
+        <input type="button" name="submit" id="submit" class="action-button" value="Xác nhận" />
+    </fieldset>
+
+</form>
+
+<!-- jQuery -->
+<script type="text/javascript" th:src="@{/asset/jquery-3.5.1.slim.min.js}"></script>
+<!-- partial -->
+<script type="text/javascript" th:src="@{/asset/script.js}" ></script>
+
+</body>
+</html>

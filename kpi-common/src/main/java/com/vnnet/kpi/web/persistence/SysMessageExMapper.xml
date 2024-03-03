@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.vnnet.kpi.web.persistence.SysMessagExMapper">
+    <resultMap id="BaseResultMap" type="com.vnnet.kpi.web.model.SysMessagHd">
+        <id column="mess_hd_id" jdbcType="BIGINT" property="messHdId"/>
+        <result column="title" jdbcType="NVARCHAR" property="title"/>
+        <result column="scheduler_date_time" jdbcType="TIMESTAMP" property="schedulerDateTime"/>
+        <result column="sms_template" jdbcType="NVARCHAR" property="smsTemplate"/>
+        <result column="create_by" jdbcType="VARCHAR" property="createBy"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="last_update_by" jdbcType="VARCHAR" property="lastUpdateBy"/>
+        <result column="last_update_time" jdbcType="TIMESTAMP" property="lastUpdateTime"/>
+        <result column="total" jdbcType="BIGINT" property="smsTotal"/>
+        <result column="del_flag" jdbcType="TINYINT" property="delFlag"/>
+        <result column="curr_date" jdbcType="TIMESTAMP" property="currDate"/>
+        <result column="tax_code_total" jdbcType="BIGINT" property="corTotal"/>
+        <result column="send_success" jdbcType="BIGINT" property="sendSuccess"/>
+        <result column="send_fail" jdbcType="BIGINT" property="sendFail"/>
+        <result column="program_id" jdbcType="BIGINT" property="programId"/>
+        <result column="detail_file" jdbcType="VARCHAR" property="detailFile"/>
+        <result column="contact_file" jdbcType="VARCHAR" property="contactFile"/>
+        <result column="del_reason" jdbcType="NVARCHAR" property="delReason"/>
+        <result column="pdf_file" jdbcType="VARCHAR" property="pdfFile"/>
+        <result column="tax_code" jdbcType="VARCHAR" property="taxCode"/>
+        <result column="cor_name" jdbcType="NVARCHAR" property="corName"/>
+        <result column="status" jdbcType="NVARCHAR" property="status"/>
+        <result column="sdt_1" jdbcType="VARCHAR" property="sdt1"/>
+        <result column="sdt_2" jdbcType="VARCHAR" property="sdt2"/>
+        <result column="stt" jdbcType="VARCHAR" property="stt"/>
+        <result column="schedulerdatetime" jdbcType="TIMESTAMP" property="schedulerDetailDateTime"/>
+        <result column="cor_success" jdbcType="BIGINT" property="corsuccess"/>
+        <result column="cor_fail" jdbcType="BIGINT" property="corfail"/>
+        <result column="cor_all" jdbcType="BIGINT" property="corall"/>
+
+    </resultMap>
+
+    <resultMap id="BaseResultDTMap" type="com.vnnet.kpi.web.model.SysMessagDt">
+        <id column="mess_dt_id" jdbcType="BIGINT" property="messDtId"/>
+        <result column="mess_hd_id" jdbcType="BIGINT" property="messHdId"/>
+        <result column="tax_code" jdbcType="VARCHAR" property="taxCode"/>
+        <result column="cor_name" jdbcType="NVARCHAR" property="corName"/>
+        <result column="called_number" jdbcType="VARCHAR" property="calledNumber"/>
+        <result column="sms_content" jdbcType="NVARCHAR" property="smsContent"/>
+        <result column="status" jdbcType="TINYINT" property="status"/>
+        <result column="title" jdbcType="NVARCHAR" property="title"/>
+        <result column="scheduler_date_time" jdbcType="TIMESTAMP" property="schedulerDateTime"/>
+        <result column="create_by" jdbcType="VARCHAR" property="createBy"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+    </resultMap>
+
+    <select id="findPage" resultMap="BaseResultMap">
+        select a.*, b.total, #{currDate} as curr_date, tax_code_total, send_success
+        from sys_message_hd a
+        join sys_program c on a.program_id = c.program_id
+        left join (select mess_hd_id, COUNT(*) as total, COUNT(distinct tax_code) as tax_code_total, SUM(case when
+        status = 1 then 1 else 0 end) as send_success
+        from sys_message_dt group by mess_hd_id) b on a.mess_hd_id = b.mess_hd_id
+        where a.title like ('%' + #{title} + '%')
+        and a.scheduler_date_time >= #{fromDate} and a.scheduler_date_time &lt; #{toDate}
+        and (a.create_by = #{userName} or #{userName} is null or #{userName} = '')
+        and (c.program_id = #{programId} or (#{programId} = '0' and #{groupCode} = 'ALL') or (#{programId} = '0' and
+        #{groupCode} = c.group_code) )
+        order by scheduler_date_time desc
+    </select>
+
+
+    <select id="sendMessage" resultMap="BaseResultDTMap">
+        select top 1000 a.* from (
+        select b.* from sys_message_hd a join sys_message_dt b on a.mess_hd_id = b.mess_hd_id
+        where a.scheduler_date_time &lt;= GETDATE() and a.del_flag = 1 and b.status = 0 ) a
+        ORDER BY a.mess_dt_id
+    </select>
+
+    <select id="findTotalMessByDate" resultMap="BaseResultMap">
+        select COUNT(b.mess_dt_id) as total, COUNT(distinct tax_code) as tax_code_total, SUM(case when b.status = 1 then
+        1 else 0 end) as send_success, SUM(case when b.status = 2 then 1 else 0 end) as send_fail
+        from sys_message_hd a
+        join sys_message_dt b on a.mess_hd_id = b.mess_hd_id
+        join sys_program c on a.program_id = c.program_id
+        where a.del_flag in (0, 1) and a.scheduler_date_time >= #{fromDate} and a.scheduler_date_time &lt; #{toDate}
+        and (c.group_code = #{group} or #{group} = 'ALL')
+    </select>
+
+    <select id="findTop5Scheduler" resultMap="BaseResultMap">
+        select top 5 a.* from (
+        select a.mess_hd_id, a.title, a.scheduler_date_time, COUNT(b.mess_dt_id) as total, SUM(case when b.status = 1
+        then 1 else 0 end) as send_success, SUM(case when b.status = 2 then 1 else 0 end) as send_fail
+        from sys_message_hd a
+        left join sys_message_dt b on a.mess_hd_id = b.mess_hd_id
+        join sys_program c on a.program_id = c.program_id
+        where a.del_flag in (0, 1) and a.scheduler_date_time >= #{fromDate} and a.scheduler_date_time &lt; #{toDate}
+        and (c.group_code = #{group} or #{group} = 'ALL')
+        group by a.mess_hd_id, a.title, a.scheduler_date_time) a
+        order by scheduler_date_time desc
+    </select>
+
+
+    <select id="findListScheduler" resultMap="BaseResultMap">
+        select a.* from (
+        select a.mess_hd_id, a.title, a.scheduler_date_time, COUNT(distinct tax_code) as tax_code_total
+        from sys_message_hd a
+        left join (select * from sys_message_dt where status = 1) b on a.mess_hd_id = b.mess_hd_id
+        join sys_program c on a.program_id = c.program_id
+        where a.del_flag in (1) and a.scheduler_date_time >= #{fromDate} and a.scheduler_date_time &lt; #{toDate}
+        and (c.group_code = #{group} or #{group} = 'ALL')
+        group by a.mess_hd_id, a.title, a.scheduler_date_time) a
+        order by scheduler_date_time asc
+    </select>
+
+    <select id="findListHistory" resultMap="BaseResultDTMap">
+        select a.title, a.scheduler_date_time, a.create_by, a.create_time, b.*
+        from sys_message_hd a
+        left join sys_message_dt b on a.mess_hd_id = b.mess_hd_id
+        join sys_program c on a.program_id = c.program_id
+        where a.del_flag in (0, 1)
+        and a.scheduler_date_time >= #{fromDate} and a.scheduler_date_time &lt; #{toDate}
+        and (a.create_by = #{userName}
+        or ((#{userName} is null or #{userName} = '') and (c.group_code = #{groupProgram} or #{groupProgram} = '0'))
+        )
+        and a.title like ('%' + #{title} + '%')
+        and lower(b.tax_code) like ('%' + lower(#{taxCode}) + '%')
+        and lower(b.cor_name) like ('%' + lower(#{corName}) + '%')
+        and b.called_number like ('%' + #{isdn} + '%')
+        and (b.status = #{status} or #{status} = '3')
+        and (c.program_id = #{programId} or #{programId} = '0')
+        order by a.scheduler_date_time desc
+    </select>
+
+    <select id="loadReport" resultMap="BaseResultMap">
+        select a.name as title, COUNT(d.mess_dt_id) as total,
+        SUM(case when d.status = 1 then 1 else 0 end) as send_success,
+        SUM(case when d.status = 2 then 1 else 0 end) as send_fail
+        from sys_department a
+        left join sys_program b on a.code = b.group_code
+        left join (select * from sys_message_hd where scheduler_date_time >= #{fromDate} and scheduler_date_time &lt; #{toDate}) c on b.program_id = c.program_id
+        left join (select * from sys_message_dt where status = #{status} or #{status} = '0') d on c.mess_hd_id = d.mess_hd_id
+        group by a.name
+    </select>
+    <select id="loadDetailReport" resultMap="BaseResultMap">
+        select * from ReportDetail(#{fromDate},#{toDate},#{groupCode},#{status},#{programid})
+    </select>
+    <select id="findTotalMessFromLoadDetailReport" resultMap="BaseResultMap">
+        select SUM(case when status = N'Gửi thành công' then
+                            1 else 0 end) as cor_success,SUM(case when status = N'Gửi thất bại' then
+                                                                       1 else 0 end) as cor_fail, SUM(case when status = N'Gửi thành công' then
+                                                                                                                1 else 0 end)+SUM(case when status = N'Gửi thất bại' then
+                                                                                                                                           1 else 0 end) as cor_all from [dbo].[ReportDetail](#{fromDate},#{toDate},#{groupCode},'0',#{programid})
+    </select>
+
+</mapper>

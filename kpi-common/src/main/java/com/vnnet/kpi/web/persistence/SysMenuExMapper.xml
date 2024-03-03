@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.vnnet.kpi.web.persistence.SysMenuExMapper">
+    <resultMap id="MenuResultMap" type="com.vnnet.kpi.web.model.SysMenu">
+        <id column="ID" property="id" jdbcType="NUMERIC"/>
+        <result column="NAME" property="name" jdbcType="VARCHAR"/>
+        <result column="PARENT_ID" property="parentId" jdbcType="NUMERIC"/>
+        <result column="URL" property="url" jdbcType="VARCHAR"/>
+        <result column="PERMS" property="perms" jdbcType="VARCHAR"/>
+        <result column="TYPE" property="type" jdbcType="NUMERIC"/>
+        <result column="ICON" property="icon" jdbcType="VARCHAR"/>
+        <result column="ORDER_NUM" property="orderNum" jdbcType="NUMERIC"/>
+        <result column="CREATE_BY" property="createBy" jdbcType="VARCHAR"/>
+        <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="LAST_UPDATE_BY" property="lastUpdateBy" jdbcType="VARCHAR"/>
+        <result column="LAST_UPDATE_TIME" property="lastUpdateTime" jdbcType="TIMESTAMP"/>
+        <result column="DEL_FLAG" property="delFlag" jdbcType="NUMERIC"/>
+    </resultMap>
+
+    <resultMap id="MenuResultMap2" type="com.vnnet.kpi.web.model.SysMenu">
+        <id column="ID" property="id" jdbcType="NUMERIC"/>
+        <result column="AB" property="ab" jdbcType="NUMERIC"/>
+        <result column="NAME" property="name" jdbcType="VARCHAR"/>
+        <result column="PARENT_ID" property="parentId" jdbcType="NUMERIC"/>
+        <result column="URL" property="url" jdbcType="VARCHAR"/>
+        <result column="PERMS" property="perms" jdbcType="VARCHAR"/>
+        <result column="TYPE" property="type" jdbcType="NUMERIC"/>
+        <result column="ICON" property="icon" jdbcType="VARCHAR"/>
+        <result column="ORDER_NUM" property="orderNum" jdbcType="NUMERIC"/>
+        <result column="CREATE_BY" property="createBy" jdbcType="VARCHAR"/>
+        <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="LAST_UPDATE_BY" property="lastUpdateBy" jdbcType="VARCHAR"/>
+        <result column="LAST_UPDATE_TIME" property="lastUpdateTime" jdbcType="TIMESTAMP"/>
+        <result column="DEL_FLAG" property="delFlag" jdbcType="NUMERIC"/>
+    </resultMap>
+
+    <resultMap id="MenuResultMap3" type="com.vnnet.kpi.web.model.SysMenu">
+        <id column="ID" property="id" jdbcType="NUMERIC"/>
+        <result column="OBJECT_ID" property="objectIdCRM" jdbcType="NUMERIC"/>
+        <result column="PARENT_ID" property="parentIdCRM" jdbcType="NUMERIC"/>
+        <result column="OBJ_TYPE" property="objectTypeCRM" jdbcType="VARCHAR"/>
+        <result column="NAME" property="nameCRM" jdbcType="VARCHAR"/>
+        <result column="DESCRIPTION" property="descriptionCRM" jdbcType="VARCHAR"/>
+        <result column="STATUS" property="statusCRM" jdbcType="NUMERIC"/>
+        <result column="MUC_UU_TIEN" property="mucUuTienCRM" jdbcType="NUMERIC"/>
+        <result column="TYPE" property="typeCRM" jdbcType="NUMERIC"/>
+    </resultMap>
+
+
+    <select id="findByUserName" parameterType="java.lang.String" resultMap="MenuResultMap">
+        SELECT m.* FROM sys_menu m WHERE m.id IN (SELECT menu_id FROM sys_role_menu WHERE role_id IN (SELECT role_id
+        FROM sys_user_role WHERE user_id IN ( SELECT id FROM sys_user WHERE name = #{userName} )))
+    </select>
+
+    <select id="findRoleMenus" parameterType="java.lang.Long" resultMap="MenuResultMap">
+        select m.* from sys_menu m, sys_role_menu rm
+        where rm.role_id = #{roleId,jdbcType=BIGINT}
+        and m.id = rm.menu_id
+    </select>
+
+    <select id="findRoleMenusC2C" parameterType="java.lang.Long" resultMap="MenuResultMap">
+        select m.* from sys_menu@profilec2c m, sys_role_menu@profilec2c rm
+        where rm.role_id = #{roleId,jdbcType=BIGINT}
+        and m.id = rm.menu_id
+    </select>
+
+    <select id="findRoleMenusICRM" parameterType="java.lang.Long" resultMap="MenuResultMap3">
+        select m.* from am_object@dblink_new m, am_group_user_object@dblink_new rm
+        where rm.group_user_id = #{roleId,jdbcType=BIGINT}
+        and m.object_id = rm.object_id
+    </select>
+
+    <select id="findRoleMenusNewProfile" parameterType="java.lang.String" resultMap="MenuResultMap2">
+        select distinct(m.id) as AB,m.* from sys_menu m, sys_role_menu rm
+        join sys_user_role c on rm.role_id = c.role_id
+        join sys_user d on c.user_id = d.id
+        join am_sys_user@profile_qlquyen e on e.name = d.name
+        where e.name = #{name}
+        and m.id = rm.menu_id
+    </select>
+
+    <select id="findRoleMenusC2CNew" parameterType="java.lang.String" resultMap="MenuResultMap2">
+        select distinct(m.id) as AB,m.* from sys_menu@profilec2c m, sys_role_menu@profilec2c rm
+        join sys_user_role@profilec2c c on rm.role_id = c.role_id
+        join sys_user@profilec2c d on c.user_id = d.id
+        join am_sys_user@profile_qlquyen e on e.name = d.name
+        where e.name = #{name}
+        and m.id = rm.menu_id
+    </select>
+
+</mapper>

@@ -1,0 +1,49 @@
+server:
+  tomcat:
+    uri-encoding: UTF-8
+    max-threads: 150
+    min-spare-threads: 30
+  port: 6006
+
+  address: 0.0.0.0
+# DataSource
+spring:
+  datasource:
+    url: jdbc:sqlserver://127.0.0.1:2000;databaseName=SmsSystem;encrypt=true;trustServerCertificate=true;useUnicode=true;characterEncoding=UTF-8;
+    username: cucthuehp
+    password: '@#Mobifone5@2022#@'
+    driverClassName: com.microsoft.sqlserver.jdbc.SQLServerDriver
+    timeBetweenEvictionRunsMillis: 1000
+    testWhileIdle: true
+    validationQuery: SELECT 1 as dual
+
+    # HikariCP settings
+  #    hikari:
+  #      minimum-idle: 5
+  #      maximum-pool-size: 20
+  #      idle-timeout: 30000
+  #      max-lifetime: 2000000
+  #      connection-timeout: 30000
+  #      pool-name: HikariPoolBooks
+  # JPA settings
+  #  jpa:
+  #    database-platform: org.hibernate.dialect.Oracle12cDialect
+  #    hibernate:
+  #      use-new-id-generator-mappings: false
+  #      ddl-auto: create
+
+  # spring boot admin
+  application:
+    name: kpi-console
+  cloud:
+    discovery:
+      enabled: false
+    consul:
+      enabled: false
+      config:
+        enabled: false
+    boot.admin.discovery:
+      ignored-services: consul
+
+
+

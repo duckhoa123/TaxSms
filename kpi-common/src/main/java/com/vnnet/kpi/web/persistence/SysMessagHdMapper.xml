@@ -1,0 +1,348 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.vnnet.kpi.web.persistence.SysMessagHdMapper">
+  <resultMap id="BaseResultMap" type="com.vnnet.kpi.web.model.SysMessagHd">
+    <id column="mess_hd_id" jdbcType="BIGINT" property="messHdId" />
+    <result column="title" jdbcType="NVARCHAR" property="title" />
+    <result column="scheduler_date_time" jdbcType="TIMESTAMP" property="schedulerDateTime" />
+    <result column="sms_template" jdbcType="NVARCHAR" property="smsTemplate" />
+    <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="last_update_by" jdbcType="VARCHAR" property="lastUpdateBy" />
+    <result column="last_update_time" jdbcType="TIMESTAMP" property="lastUpdateTime" />
+    <result column="program_id" jdbcType="BIGINT" property="programId" />
+    <result column="detail_file" jdbcType="VARCHAR" property="detailFile" />
+    <result column="contact_file" jdbcType="VARCHAR" property="contactFile" />
+    <result column="del_flag" jdbcType="TINYINT" property="delFlag" />
+    <result column="del_reason" jdbcType="NVARCHAR" property="delReason" />
+    <result column="pdf_file" jdbcType="VARCHAR" property="pdfFile" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    mess_hd_id, title, scheduler_date_time, sms_template, create_by, create_time, last_update_by, 
+    last_update_time, program_id, detail_file, contact_file, del_flag, del_reason, pdf_file
+  </sql>
+  <select id="selectByExample" parameterType="com.vnnet.kpi.web.model.SysMessagHdExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from sys_message_hd
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from sys_message_hd
+    where mess_hd_id = #{messHdId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from sys_message_hd
+    where mess_hd_id = #{messHdId,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.vnnet.kpi.web.model.SysMessagHdExample">
+    delete from sys_message_hd
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" keyColumn="mess_hd_id" keyProperty="messHdId" parameterType="com.vnnet.kpi.web.model.SysMessagHd" useGeneratedKeys="true">
+    insert into sys_message_hd (title, scheduler_date_time, sms_template, 
+      create_by, create_time, last_update_by, 
+      last_update_time, program_id, detail_file, 
+      contact_file, del_flag, del_reason, 
+      pdf_file)
+    values (#{title,jdbcType=NVARCHAR}, #{schedulerDateTime,jdbcType=TIMESTAMP}, #{smsTemplate,jdbcType=NVARCHAR}, 
+      #{createBy,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{lastUpdateBy,jdbcType=VARCHAR}, 
+      #{lastUpdateTime,jdbcType=TIMESTAMP}, #{programId,jdbcType=BIGINT}, #{detailFile,jdbcType=VARCHAR}, 
+      #{contactFile,jdbcType=VARCHAR}, #{delFlag,jdbcType=TINYINT}, #{delReason,jdbcType=NVARCHAR}, 
+      #{pdfFile,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" keyColumn="mess_hd_id" keyProperty="messHdId" parameterType="com.vnnet.kpi.web.model.SysMessagHd" useGeneratedKeys="true">
+    insert into sys_message_hd
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="title != null">
+        title,
+      </if>
+      <if test="schedulerDateTime != null">
+        scheduler_date_time,
+      </if>
+      <if test="smsTemplate != null">
+        sms_template,
+      </if>
+      <if test="createBy != null">
+        create_by,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="lastUpdateBy != null">
+        last_update_by,
+      </if>
+      <if test="lastUpdateTime != null">
+        last_update_time,
+      </if>
+      <if test="programId != null">
+        program_id,
+      </if>
+      <if test="detailFile != null">
+        detail_file,
+      </if>
+      <if test="contactFile != null">
+        contact_file,
+      </if>
+      <if test="delFlag != null">
+        del_flag,
+      </if>
+      <if test="delReason != null">
+        del_reason,
+      </if>
+      <if test="pdfFile != null">
+        pdf_file,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="title != null">
+        #{title,jdbcType=NVARCHAR},
+      </if>
+      <if test="schedulerDateTime != null">
+        #{schedulerDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="smsTemplate != null">
+        #{smsTemplate,jdbcType=NVARCHAR},
+      </if>
+      <if test="createBy != null">
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdateBy != null">
+        #{lastUpdateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdateTime != null">
+        #{lastUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="programId != null">
+        #{programId,jdbcType=BIGINT},
+      </if>
+      <if test="detailFile != null">
+        #{detailFile,jdbcType=VARCHAR},
+      </if>
+      <if test="contactFile != null">
+        #{contactFile,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null">
+        #{delFlag,jdbcType=TINYINT},
+      </if>
+      <if test="delReason != null">
+        #{delReason,jdbcType=NVARCHAR},
+      </if>
+      <if test="pdfFile != null">
+        #{pdfFile,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.vnnet.kpi.web.model.SysMessagHdExample" resultType="java.lang.Long">
+    select count(*) from sys_message_hd
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update sys_message_hd
+    <set>
+      <if test="record.messHdId != null">
+        mess_hd_id = #{record.messHdId,jdbcType=BIGINT},
+      </if>
+      <if test="record.title != null">
+        title = #{record.title,jdbcType=NVARCHAR},
+      </if>
+      <if test="record.schedulerDateTime != null">
+        scheduler_date_time = #{record.schedulerDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.smsTemplate != null">
+        sms_template = #{record.smsTemplate,jdbcType=NVARCHAR},
+      </if>
+      <if test="record.createBy != null">
+        create_by = #{record.createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null">
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.lastUpdateBy != null">
+        last_update_by = #{record.lastUpdateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="record.lastUpdateTime != null">
+        last_update_time = #{record.lastUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.programId != null">
+        program_id = #{record.programId,jdbcType=BIGINT},
+      </if>
+      <if test="record.detailFile != null">
+        detail_file = #{record.detailFile,jdbcType=VARCHAR},
+      </if>
+      <if test="record.contactFile != null">
+        contact_file = #{record.contactFile,jdbcType=VARCHAR},
+      </if>
+      <if test="record.delFlag != null">
+        del_flag = #{record.delFlag,jdbcType=TINYINT},
+      </if>
+      <if test="record.delReason != null">
+        del_reason = #{record.delReason,jdbcType=NVARCHAR},
+      </if>
+      <if test="record.pdfFile != null">
+        pdf_file = #{record.pdfFile,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update sys_message_hd
+    set mess_hd_id = #{record.messHdId,jdbcType=BIGINT},
+      title = #{record.title,jdbcType=NVARCHAR},
+      scheduler_date_time = #{record.schedulerDateTime,jdbcType=TIMESTAMP},
+      sms_template = #{record.smsTemplate,jdbcType=NVARCHAR},
+      create_by = #{record.createBy,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      last_update_by = #{record.lastUpdateBy,jdbcType=VARCHAR},
+      last_update_time = #{record.lastUpdateTime,jdbcType=TIMESTAMP},
+      program_id = #{record.programId,jdbcType=BIGINT},
+      detail_file = #{record.detailFile,jdbcType=VARCHAR},
+      contact_file = #{record.contactFile,jdbcType=VARCHAR},
+      del_flag = #{record.delFlag,jdbcType=TINYINT},
+      del_reason = #{record.delReason,jdbcType=NVARCHAR},
+      pdf_file = #{record.pdfFile,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.vnnet.kpi.web.model.SysMessagHd">
+    update sys_message_hd
+    <set>
+      <if test="title != null">
+        title = #{title,jdbcType=NVARCHAR},
+      </if>
+      <if test="schedulerDateTime != null">
+        scheduler_date_time = #{schedulerDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="smsTemplate != null">
+        sms_template = #{smsTemplate,jdbcType=NVARCHAR},
+      </if>
+      <if test="createBy != null">
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdateBy != null">
+        last_update_by = #{lastUpdateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdateTime != null">
+        last_update_time = #{lastUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="programId != null">
+        program_id = #{programId,jdbcType=BIGINT},
+      </if>
+      <if test="detailFile != null">
+        detail_file = #{detailFile,jdbcType=VARCHAR},
+      </if>
+      <if test="contactFile != null">
+        contact_file = #{contactFile,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null">
+        del_flag = #{delFlag,jdbcType=TINYINT},
+      </if>
+      <if test="delReason != null">
+        del_reason = #{delReason,jdbcType=NVARCHAR},
+      </if>
+      <if test="pdfFile != null">
+        pdf_file = #{pdfFile,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where mess_hd_id = #{messHdId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.vnnet.kpi.web.model.SysMessagHd">
+    update sys_message_hd
+    set title = #{title,jdbcType=NVARCHAR},
+      scheduler_date_time = #{schedulerDateTime,jdbcType=TIMESTAMP},
+      sms_template = #{smsTemplate,jdbcType=NVARCHAR},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      last_update_by = #{lastUpdateBy,jdbcType=VARCHAR},
+      last_update_time = #{lastUpdateTime,jdbcType=TIMESTAMP},
+      program_id = #{programId,jdbcType=BIGINT},
+      detail_file = #{detailFile,jdbcType=VARCHAR},
+      contact_file = #{contactFile,jdbcType=VARCHAR},
+      del_flag = #{delFlag,jdbcType=TINYINT},
+      del_reason = #{delReason,jdbcType=NVARCHAR},
+      pdf_file = #{pdfFile,jdbcType=VARCHAR}
+    where mess_hd_id = #{messHdId,jdbcType=BIGINT}
+  </update>
+</mapper>

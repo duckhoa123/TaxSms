@@ -1,0 +1,319 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.vnnet.kpi.web.persistence.SysLogExMapper">
+    <resultMap id="BaseResultMap" type="com.vnnet.kpi.web.model.SysLog">
+        <id column="ID" jdbcType="NUMERIC" property="id"/>
+        <result column="USER_NAME" jdbcType="VARCHAR" property="userName"/>
+        <result column="OPERATION" jdbcType="VARCHAR" property="operation"/>
+        <result column="METHOD" jdbcType="VARCHAR" property="method"/>
+        <result column="PARAMS" jdbcType="VARCHAR" property="params"/>
+        <result column="TIME" jdbcType="NUMERIC" property="time"/>
+        <result column="IP" jdbcType="VARCHAR" property="ip"/>
+        <result column="CREATE_BY" jdbcType="VARCHAR" property="createBy"/>
+        <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="LAST_UPDATE_BY" jdbcType="VARCHAR" property="lastUpdateBy"/>
+        <result column="LAST_UPDATE_TIME" jdbcType="TIMESTAMP" property="lastUpdateTime"/>
+    </resultMap>
+    <sql id="Example_Where_Clause">
+        <where>
+            <foreach collection="oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" prefixOverrides="and" suffix=")">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach close=")" collection="criterion.value" item="listItem" open="("
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Update_By_Example_Where_Clause">
+        <where>
+            <foreach collection="example.oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" prefixOverrides="and" suffix=")">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach close=")" collection="criterion.value" item="listItem" open="("
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Base_Column_List">
+        ID, USER_NAME, OPERATION, METHOD, PARAMS, TIME, IP, CREATE_BY, CREATE_TIME, LAST_UPDATE_BY,
+        LAST_UPDATE_TIME
+    </sql>
+
+    <select id="selectByExampleNewKPI" resultMap="BaseResultMap">
+        select a.* from sys_log a
+        where
+        (LOWER(a.user_name) like ('%' || LOWER(#{filterText}) || '%'))
+        and a.user_name = #{userName}
+        order by a.create_time desc
+    </select>
+
+    <select id="selectByExampleNewC2C" resultMap="BaseResultMap">
+        select a.* from sys_log@profilec2c a
+        where
+        (LOWER(a.user_name) like ('%' || LOWER(#{filterText}) || '%'))
+        and a.user_name = #{userName}
+        order by a.create_time desc
+    </select>
+    <!--  <select id="selectByExample" parameterType="com.vnnet.kpi.web.model.SysLogExample" resultMap="BaseResultMap">-->
+    <!--    select-->
+    <!--    <if test="distinct">-->
+    <!--      distinct-->
+    <!--    </if>-->
+    <!--    'true' as QUERYID,-->
+    <!--    <include refid="Base_Column_List" />-->
+    <!--    from SYS_LOG-->
+    <!--    <if test="_parameter != null">-->
+    <!--      <include refid="Example_Where_Clause" />-->
+    <!--    </if>-->
+    <!--    <if test="orderByClause != null">-->
+    <!--      order by ${orderByClause}-->
+    <!--    </if>-->
+    <!--  </select>-->
+    <!--  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">-->
+    <!--    select -->
+    <!--    <include refid="Base_Column_List" />-->
+    <!--    from SYS_LOG-->
+    <!--    where ID = #{id,jdbcType=NUMERIC}-->
+    <!--  </select>-->
+    <!--  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">-->
+    <!--    delete from SYS_LOG-->
+    <!--    where ID = #{id,jdbcType=NUMERIC}-->
+    <!--  </delete>-->
+    <!--  <delete id="deleteByExample" parameterType="com.vnnet.kpi.web.model.SysLogExample">-->
+    <!--    delete from SYS_LOG-->
+    <!--    <if test="_parameter != null">-->
+    <!--      <include refid="Example_Where_Clause" />-->
+    <!--    </if>-->
+    <!--  </delete>-->
+    <!--  <insert id="insert" keyColumn="ID" keyProperty="id" parameterType="com.vnnet.kpi.web.model.SysLog" useGeneratedKeys="true">-->
+    <!--    insert into SYS_LOG (USER_NAME, OPERATION, METHOD, -->
+    <!--      PARAMS, TIME, IP, CREATE_BY, -->
+    <!--      CREATE_TIME, LAST_UPDATE_BY, LAST_UPDATE_TIME-->
+    <!--      )-->
+    <!--    values (#{userName,jdbcType=VARCHAR}, #{operation,jdbcType=VARCHAR}, #{method,jdbcType=VARCHAR}, -->
+    <!--      #{params,jdbcType=VARCHAR}, #{time,jdbcType=NUMERIC}, #{ip,jdbcType=VARCHAR}, #{createBy,jdbcType=VARCHAR}, -->
+    <!--      #{createTime,jdbcType=TIMESTAMP}, #{lastUpdateBy,jdbcType=VARCHAR}, #{lastUpdateTime,jdbcType=TIMESTAMP}-->
+    <!--      )-->
+    <!--  </insert>-->
+    <!--  <insert id="insertSelective" keyColumn="ID" keyProperty="id" parameterType="com.vnnet.kpi.web.model.SysLog" useGeneratedKeys="true">-->
+    <!--    insert into SYS_LOG-->
+    <!--    <trim prefix="(" suffix=")" suffixOverrides=",">-->
+    <!--      <if test="userName != null">-->
+    <!--        USER_NAME,-->
+    <!--      </if>-->
+    <!--      <if test="operation != null">-->
+    <!--        OPERATION,-->
+    <!--      </if>-->
+    <!--      <if test="method != null">-->
+    <!--        METHOD,-->
+    <!--      </if>-->
+    <!--      <if test="params != null">-->
+    <!--        PARAMS,-->
+    <!--      </if>-->
+    <!--      <if test="time != null">-->
+    <!--        TIME,-->
+    <!--      </if>-->
+    <!--      <if test="ip != null">-->
+    <!--        IP,-->
+    <!--      </if>-->
+    <!--      <if test="createBy != null">-->
+    <!--        CREATE_BY,-->
+    <!--      </if>-->
+    <!--      <if test="createTime != null">-->
+    <!--        CREATE_TIME,-->
+    <!--      </if>-->
+    <!--      <if test="lastUpdateBy != null">-->
+    <!--        LAST_UPDATE_BY,-->
+    <!--      </if>-->
+    <!--      <if test="lastUpdateTime != null">-->
+    <!--        LAST_UPDATE_TIME,-->
+    <!--      </if>-->
+    <!--    </trim>-->
+    <!--    <trim prefix="values (" suffix=")" suffixOverrides=",">-->
+    <!--      <if test="userName != null">-->
+    <!--        #{userName,jdbcType=VARCHAR},-->
+    <!--      </if>-->
+    <!--      <if test="operation != null">-->
+    <!--        #{operation,jdbcType=VARCHAR},-->
+    <!--      </if>-->
+    <!--      <if test="method != null">-->
+    <!--        #{method,jdbcType=VARCHAR},-->
+    <!--      </if>-->
+    <!--      <if test="params != null">-->
+    <!--        #{params,jdbcType=VARCHAR},-->
+    <!--      </if>-->
+    <!--      <if test="time != null">-->
+    <!--        #{time,jdbcType=NUMERIC},-->
+    <!--      </if>-->
+    <!--      <if test="ip != null">-->
+    <!--        #{ip,jdbcType=VARCHAR},-->
+    <!--      </if>-->
+    <!--      <if test="createBy != null">-->
+    <!--        #{createBy,jdbcType=VARCHAR},-->
+    <!--      </if>-->
+    <!--      <if test="createTime != null">-->
+    <!--        #{createTime,jdbcType=TIMESTAMP},-->
+    <!--      </if>-->
+    <!--      <if test="lastUpdateBy != null">-->
+    <!--        #{lastUpdateBy,jdbcType=VARCHAR},-->
+    <!--      </if>-->
+    <!--      <if test="lastUpdateTime != null">-->
+    <!--        #{lastUpdateTime,jdbcType=TIMESTAMP},-->
+    <!--      </if>-->
+    <!--    </trim>-->
+    <!--  </insert>-->
+    <!--  <select id="countByExample" parameterType="com.vnnet.kpi.web.model.SysLogExample" resultType="java.lang.Long">-->
+    <!--    select count(*) from SYS_LOG-->
+    <!--    <if test="_parameter != null">-->
+    <!--      <include refid="Example_Where_Clause" />-->
+    <!--    </if>-->
+    <!--  </select>-->
+    <!--  <update id="updateByExampleSelective" parameterType="map">-->
+    <!--    update SYS_LOG-->
+    <!--    <set>-->
+    <!--      <if test="record.id != null">-->
+    <!--        ID = #{record.id,jdbcType=NUMERIC},-->
+    <!--      </if>-->
+    <!--      <if test="record.userName != null">-->
+    <!--        USER_NAME = #{record.userName,jdbcType=VARCHAR},-->
+    <!--      </if>-->
+    <!--      <if test="record.operation != null">-->
+    <!--        OPERATION = #{record.operation,jdbcType=VARCHAR},-->
+    <!--      </if>-->
+    <!--      <if test="record.method != null">-->
+    <!--        METHOD = #{record.method,jdbcType=VARCHAR},-->
+    <!--      </if>-->
+    <!--      <if test="record.params != null">-->
+    <!--        PARAMS = #{record.params,jdbcType=VARCHAR},-->
+    <!--      </if>-->
+    <!--      <if test="record.time != null">-->
+    <!--        TIME = #{record.time,jdbcType=NUMERIC},-->
+    <!--      </if>-->
+    <!--      <if test="record.ip != null">-->
+    <!--        IP = #{record.ip,jdbcType=VARCHAR},-->
+    <!--      </if>-->
+    <!--      <if test="record.createBy != null">-->
+    <!--        CREATE_BY = #{record.createBy,jdbcType=VARCHAR},-->
+    <!--      </if>-->
+    <!--      <if test="record.createTime != null">-->
+    <!--        CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},-->
+    <!--      </if>-->
+    <!--      <if test="record.lastUpdateBy != null">-->
+    <!--        LAST_UPDATE_BY = #{record.lastUpdateBy,jdbcType=VARCHAR},-->
+    <!--      </if>-->
+    <!--      <if test="record.lastUpdateTime != null">-->
+    <!--        LAST_UPDATE_TIME = #{record.lastUpdateTime,jdbcType=TIMESTAMP},-->
+    <!--      </if>-->
+    <!--    </set>-->
+    <!--    <if test="_parameter != null">-->
+    <!--      <include refid="Update_By_Example_Where_Clause" />-->
+    <!--    </if>-->
+    <!--  </update>-->
+    <!--  <update id="updateByExample" parameterType="map">-->
+    <!--    update SYS_LOG-->
+    <!--    set ID = #{record.id,jdbcType=NUMERIC},-->
+    <!--      USER_NAME = #{record.userName,jdbcType=VARCHAR},-->
+    <!--      OPERATION = #{record.operation,jdbcType=VARCHAR},-->
+    <!--      METHOD = #{record.method,jdbcType=VARCHAR},-->
+    <!--      PARAMS = #{record.params,jdbcType=VARCHAR},-->
+    <!--      TIME = #{record.time,jdbcType=NUMERIC},-->
+    <!--      IP = #{record.ip,jdbcType=VARCHAR},-->
+    <!--      CREATE_BY = #{record.createBy,jdbcType=VARCHAR},-->
+    <!--      CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},-->
+    <!--      LAST_UPDATE_BY = #{record.lastUpdateBy,jdbcType=VARCHAR},-->
+    <!--      LAST_UPDATE_TIME = #{record.lastUpdateTime,jdbcType=TIMESTAMP}-->
+    <!--    <if test="_parameter != null">-->
+    <!--      <include refid="Update_By_Example_Where_Clause" />-->
+    <!--    </if>-->
+    <!--  </update>-->
+    <!--  <update id="updateByPrimaryKeySelective" parameterType="com.vnnet.kpi.web.model.SysLog">-->
+    <!--    update SYS_LOG-->
+    <!--    <set>-->
+    <!--      <if test="userName != null">-->
+    <!--        USER_NAME = #{userName,jdbcType=VARCHAR},-->
+    <!--      </if>-->
+    <!--      <if test="operation != null">-->
+    <!--        OPERATION = #{operation,jdbcType=VARCHAR},-->
+    <!--      </if>-->
+    <!--      <if test="method != null">-->
+    <!--        METHOD = #{method,jdbcType=VARCHAR},-->
+    <!--      </if>-->
+    <!--      <if test="params != null">-->
+    <!--        PARAMS = #{params,jdbcType=VARCHAR},-->
+    <!--      </if>-->
+    <!--      <if test="time != null">-->
+    <!--        TIME = #{time,jdbcType=NUMERIC},-->
+    <!--      </if>-->
+    <!--      <if test="ip != null">-->
+    <!--        IP = #{ip,jdbcType=VARCHAR},-->
+    <!--      </if>-->
+    <!--      <if test="createBy != null">-->
+    <!--        CREATE_BY = #{createBy,jdbcType=VARCHAR},-->
+    <!--      </if>-->
+    <!--      <if test="createTime != null">-->
+    <!--        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},-->
+    <!--      </if>-->
+    <!--      <if test="lastUpdateBy != null">-->
+    <!--        LAST_UPDATE_BY = #{lastUpdateBy,jdbcType=VARCHAR},-->
+    <!--      </if>-->
+    <!--      <if test="lastUpdateTime != null">-->
+    <!--        LAST_UPDATE_TIME = #{lastUpdateTime,jdbcType=TIMESTAMP},-->
+    <!--      </if>-->
+    <!--    </set>-->
+    <!--    where ID = #{id,jdbcType=NUMERIC}-->
+    <!--  </update>-->
+    <!--  <update id="updateByPrimaryKey" parameterType="com.vnnet.kpi.web.model.SysLog">-->
+    <!--    update SYS_LOG-->
+    <!--    set USER_NAME = #{userName,jdbcType=VARCHAR},-->
+    <!--      OPERATION = #{operation,jdbcType=VARCHAR},-->
+    <!--      METHOD = #{method,jdbcType=VARCHAR},-->
+    <!--      PARAMS = #{params,jdbcType=VARCHAR},-->
+    <!--      TIME = #{time,jdbcType=NUMERIC},-->
+    <!--      IP = #{ip,jdbcType=VARCHAR},-->
+    <!--      CREATE_BY = #{createBy,jdbcType=VARCHAR},-->
+    <!--      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},-->
+    <!--      LAST_UPDATE_BY = #{lastUpdateBy,jdbcType=VARCHAR},-->
+    <!--      LAST_UPDATE_TIME = #{lastUpdateTime,jdbcType=TIMESTAMP}-->
+    <!--    where ID = #{id,jdbcType=NUMERIC}-->
+    <!--  </update>-->
+</mapper>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ExternalStorageConfigurationManager" enabled="true" />
+  <component name="FrameworkDetectionExcludesConfiguration">
+    <file type="web" url="file://$PROJECT_DIR$/kpi-batch" />
+    <file type="web" url="file://$PROJECT_DIR$/kpi-console" />
+    <file type="web" url="file://$PROJECT_DIR$/kpi-readpdf-ui" />
+  </component>
+  <component name="MavenProjectsManager">
+    <option name="originalFiles">
+      <list>
+        <option value="$PROJECT_DIR$/kpi-common/pom.xml" />
+        <option value="$PROJECT_DIR$/kpi-console/pom.xml" />
+        <option value="$PROJECT_DIR$/kpi-generator/pom.xml" />
+        <option value="$PROJECT_DIR$/kpi-readpdf-ui/pom.xml" />
+        <option value="$PROJECT_DIR$/kpi-batch/pom.xml" />
+      </list>
+    </option>
+    <option name="workspaceImportForciblyTurnedOn" value="true" />
+  </component>
+  <component name="ProjectRootManager" version="2" project-jdk-name="1.8" project-jdk-type="JavaSDK" />
+</project>
