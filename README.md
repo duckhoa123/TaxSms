@@ -1,9 +1,9 @@
 # TaxSms
-About the API
+## About the API
 
 An API designed to assist government entities in overseeing corporate tax affairs is required. This involves establishing endpoints that enable the government to interact with the tax management system, including submitting tax data,create message schedule, retrieving records, updating information, and generating reports. Secure authentication and authorization protocols are also implemented to ensure that only authorized personnel can access and manage tax data. It is built with Java, Spring Boot, and Spring Framework. The API main URL /home.
 
-Features
+## Features
 
 This API provides HTTP endpoint's and tools for the following:
 
@@ -23,15 +23,21 @@ Message Template Management: POST/smstemp/add, POST/smstemp/update, POST/smstemp
 
 ...
 
-Details
+## Details
 
 To test all the functions of the API, you can sign in with Admin account which has the admin role to access every features of the project. Provide parmeters in the body as in the picture below:
 
-![429919733_771359138296625_3429921232609647446_n](https://github.com/duckhoa123/TaxSms/assets/101631798/a26360ec-f10a-44cb-9337-742d3359bc95)
+![429919733_771359138296625_3429921232609647446_n](https://github.com/duckhoa123/TaxSms/assets/101631798/9ea94862-6e3b-4b41-8696-38f3ef7269ea)
+
+
+
+
+
 
 And then you can copy the token generated in the returned object and paste it in the authorization header to use any end-point:
+![429627685_1138495547578069_6471140224274014646_n](https://github.com/duckhoa123/TaxSms/assets/101631798/168c7152-31d4-4dcb-b2d8-25b0b6419856)
 
-![429627685_1138495547578069_6471140224274014646_n](https://github.com/duckhoa123/TaxSms/assets/101631798/4fe4ca0a-e98f-4095-a0c8-700354c56c9d)
+
 
 For any end-point that send file to computer such as: generating report, pdf files,... You provide parameters required in the body and click send and download. For example:
 
@@ -69,16 +75,18 @@ Apache Poi 4.1.2
 
 Maven
 
-Execution
+## Execution
 
 You need to have Microsoft SQL Server installed on your machine to run the API. After installed, you can use the .bak file attached in Database folder to restore the database and then type in your username and password for SQL server:
 
 
-<img width="717" alt="423472153_2395130190878117_8661648126697593368_n" src="https://github.com/duckhoa123/TaxSms/assets/101631798/fe4f6392-0f7d-419c-b3e1-6d7b6f417705">
+![423472153_2395130190878117_8661648126697593368_n](https://github.com/duckhoa123/TaxSms/assets/101631798/bdbeb94c-14d6-449d-ba85-719acdca0c76)
+
 
 You have to change the paths in the picture below, where the File folder is located in your machine
+![423541930_364861796431252_7196994490574629606_n](https://github.com/duckhoa123/TaxSms/assets/101631798/26ac1c98-bfc3-4464-a85e-9ecfffa7d8b0)
 
-![423541930_364861796431252_7196994490574629606_n](https://github.com/duckhoa123/TaxSms/assets/101631798/42a15a0c-9deb-4d8b-af55-af6439910a31)
+
 
 By default, the API will be available at http://localhost:6005/home
 
