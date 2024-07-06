@@ -8,10 +8,10 @@ server:
   address: 0.0.0.0
 # DataSource
 spring:
-  datasource:
-    url: jdbc:sqlserver://Khoa:1433;databaseName=CucThue;encrypt=true;trustServerCertificate=true;useUnicode=true;characterEncoding=UTF-8;
-    username: 'sa'
-    password: '123456'
+  datasource: 'Connection string',
+    url:
+    username:
+    password:
     driverClassName: com.microsoft.sqlserver.jdbc.SQLServerDriver
     timeBetweenEvictionRunsMillis: 1000
     testWhileIdle: true
